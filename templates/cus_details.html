@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/cus_details.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+    <script>src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"</script>
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav class="navbar justify-content-between">
+        <a class="navbar-brand" style="color: aliceblue;" href="#">DinoBiz</a>
+            <div class="dropdown ">
+                <button class="btn btn-secondary dropdown-toggle " style="background-color:#fc7608;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Settings</a>
+                  <a class="dropdown-item" href="#">Logout</a>
+                </div>
+              </div>        
+      </nav>  
+      <section class="summary">
+          <div class="cards">
+            <div id="i1">
+              <h4>{{customer.fname}}&nbsp{{customer.lname}}</h4>
+              <button type="button" class="btn btn-secondary btn-lg" style="width: 90%; height: 20%; font-size: 90%; margin: 2%;"><a href="#">Update Information</a></button><br>
+              <button type="button" class="btn btn-secondary btn-lg" style="width: 90%; height: 20%; font-size: 90%; margin: 2%;"><a href="#">Delete Customer</a></button><br>
+            </div>
+            <div id="i2">
+              <h4>Total Number of Orders</h4>
+              <p>{{orders_count}}</p>
+            </div>
+            <div id="i3">
+              <h4>Contact</h4>
+              <p>{{customer.email}}</p>
+              <p>{{customer.u_phone}}</p>
+            </div>
+          </div>
+      </section>
+      <section class="orders">
+        <table>
+          <tr>
+            <th>Item</th>
+            <th>Category</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th>Update</th>
+            <th>Remove</th>
+          </tr>
+          {% for order in orders %}
+          
+          <tr>
+              <td>{{order.product}}</td>
+              <td>{{order.product.category}}</td>
+              <td>{{order.date_created}}</td>
+              <td>{{order.status}}</td>
+              <td><button type="button" class="btn btn-outline-info"><a href="{% url 'orderUpdate' order.id %}">Update</a></button></td>
+              <td><button type="button" class="btn btn-outline-danger"><a href="#">Delete</a></button></td>
+          </tr>
+         
+          {% endfor %}
+          
+        </table>
+      </section>
+</body>
+<footer>
+
+</footer>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/seller.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+    <script>src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"</script>
+    <title>Dashboard</title>
+</head>
+<body>
+    <nav class="navbar justify-content-between">
+        <a class="navbar-brand" style="color: aliceblue;" href="#">DinoBiz</a>
+            <div class="dropdown ">
+                <button class="btn btn-secondary dropdown-toggle " style="background-color:#fc7608;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Settings</a>
+                  <a class="dropdown-item" href="#">Logout</a>
+                </div>
+              </div>        
+      </nav>  
+  
