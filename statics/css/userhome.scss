@@ -1,0 +1,73 @@
+$purple-lt: rgb(191, 158, 218);
+$purple:rgb(170, 105, 170);
+$purple-dk:rgb(150, 83, 150);
+$bg:rgb(243, 243, 243);
+
+body{
+        background: $bg;
+}
+nav{
+        background: $purple-lt;
+        a{
+                color: ivory;
+        }
+}
+.cards{
+        position: relative;
+        background-color:$bg;
+        padding: 5%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit,minmax(18rem,0.8fr));
+        row-gap: 4%;
+        .card{
+                transition: transform 0.5s;
+                &:hover{
+                        transform: translateY(-4px);
+                }
+
+                a{
+                        background:$purple;
+                        border: none;
+                }
+                a:hover{
+                        background:$purple-dk;
+                }
+        }
+}
+
+.bestseller{
+        .bestcards{
+                position: relative;
+                display: grid;
+                grid-template-columns: repeat(auto-fit,minmax(19rem,1fr));
+                row-gap: 1%;
+                .card{
+                        transition: transform 0.5s;
+                        &:hover{
+                                transform: translateY(-3px);
+                        }
+        
+                        a{
+                                background:$purple;
+                                border: none;
+                        }
+                        a:hover{
+                                background:$purple-dk ;
+                        }
+                }
+        }
+        
+}
+
+.update{
+        form{
+                button{
+                        background:$purple;
+                        border: none;
+                }
+                button:hover{
+                        background:$purple-dk;
+                }
+        }
+        
+}

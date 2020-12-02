@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from accounts import views
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/',views.home,name="home"),
     path('customer/<str:c_pk>/',views.test2,name="customer"),
     path('seller/<str:s_pk>/',views.test1,name="seller"),
-    path('order_update/<str:pk>/',views.orderUpdate,name="orderUpdate")
-]
+    path('order_update/<str:pk>/',views.orderUpdate,name="orderUpdate"),
+    path('uhome/<str:pk>/', views.userHome, name="uHome"),
+    path('uprofile/<str:pk>/', views.userProfile, name="uProfile")
+]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

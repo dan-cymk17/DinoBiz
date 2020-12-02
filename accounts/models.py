@@ -10,6 +10,8 @@ class Tag(models.Model):
             ('Laundry' ,'Laundry'),
             ('Grocery' , 'Grocery'),
             ('Dessert','Dessert'),
+            ('Art','Art'),
+            ('Craft','Craft')
     ) 
     tag = models.CharField(max_length=200,null=True,choices=Category)
 
@@ -23,6 +25,7 @@ class Customer(models.Model):
     email = models.CharField(max_length=200,null=True)
     u_dob = models.DateField(null=True)
     u_phone = models.CharField(max_length=12,null=True)
+    profile=models.ImageField(null=True,blank=True,upload_to="images/",default='default/image.jpg')
     date_created = models.DateField(auto_now_add=True,null=True)
 
     def __str__(self):
@@ -33,12 +36,13 @@ class Seller(models.Model):
     lname = models.CharField(max_length=200,null=True)
     company = models.CharField(max_length=100,null=True)
     address=  models.CharField(max_length=300,null=True)
-    email = models.CharField(max_length=200,null=True)
+    locality = models.CharField(max_length=100,null=True)
+    email = models.CharField(max_length=200,null=True,)
     s_dob = models.DateField(null=True)
     s_phone = models.CharField(max_length=12,null=True)
     date_created = models.DateField(auto_now_add=True,null=True)
     description = models.CharField(max_length=500,null=True,blank=True)
-    #add a many to many tag from tag
+    image=models.ImageField(null=True,blank=True,upload_to="images/")
     tags = models.ManyToManyField(Tag)
     
 

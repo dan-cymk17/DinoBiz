@@ -9,4 +9,4 @@ admin.site.register(Seller)
 admin.site.register(Order)
 admin.site.register(Product)
 admin.site.register(Tag)
-
+ 
