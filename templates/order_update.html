@@ -1,0 +1,16 @@
+{% include 'common/seller_template.html' %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/order_update.css' %}">
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-body">
+            <form actions="" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input class="btn btn-info" type='submit'name="Make Changes" >
+            </form>
+        </div>
+    </div>
+</div>
+
+{% include 'common/seller_footer.html' %}
