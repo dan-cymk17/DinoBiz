@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DinoBiz</title>
+
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+</head>
+<body>
+<header>
+    <div class="container">
+        <nav class="nav">
+            <a href="{% url 'home' %}" class="nav-logo">DinoBiz</a>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{% url 'home' %}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#why" class="nav-link">Why US</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Get Started</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="circle circle-small">
+        <img src="{% static 'img/circle-small.png' %}" alt="">
+    </div>
+    <div class="circle circle-large">
+        <img src="{% static 'img/circle-large.png' %}" alt="">
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="text">
+                <h1>Starting a <br> new <span>Business?</span></h1>
+                <h5>Getting recognised just got easier!</h5>
+                <p>Did lockdown bring a change in you to start something new? Have an idea that you always wanted to implement? Well now is your time, Get a chance to showcase your products and get recognised in your city.</p>
+                <a href="#why" class="cta">Why Us</a>
+            </div>
+            <div class="watch-wrapper">
+                <img src="{% static 'img/new-product.svg' %}" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay">
+        <div class="layer layer-1"></div>
+        <div class="layer layer-2"></div>
+        <div class="layer layer-3"></div>
+    </div>
+</section>
+
+<section class="why" id="why">
+    <div class="container2">
+        <div class="content2">
+            <h1>What we <span>do</span></h1>
+            <div class="text2">
+                <h2>Our objective is to provide a website for both the customer as well as a business owner to efficiently handle orders</h2><br><br><br>
+                <h2>Manage your new business with a simple and smart management system </h2><br><br><br>
+                <h2>Provides a portal for nearby customers to view your products</h2><br><br>
+            </div>
+        </div>
+        <div class="cus-feed">
+            <img src="{% static 'img/customer.png' %}" alt="">
+        </div>
+    </div>
+    
+</section>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.5/gsap.min.js"></script>
+
+<script>
+    gsap.to('.layer-1', {y: '-100vh', delay: .5});
+    gsap.to('.layer-2', {y: '-100vh', delay: .7});
+    gsap.to('.layer-3', {y: '-100vh', delay: .9});
+    gsap.to('.overlay', {y: '-100vh', delay: 1.5});
+
+    gsap.fromTo('.text',
+        {x: '30rem', opacity: 0},
+        {x: 0, opacity: 1, ease: 'back.out(1.7)', delay:1.9});
+
+    gsap.fromTo('.watch-wrapper',
+        {x: '30rem', opacity: 0},
+        {x: 0, opacity: 1, ease: 'back.out(1.7)', delay:2.3});
+
+    gsap.fromTo('.circle-small',
+        {x: '-30rem', opacity: 0},
+        {x: 0, opacity: 1, ease: 'back.out(1.7)', delay:1});
+
+    gsap.fromTo('.circle-large',
+        {x: '30rem', opacity: 0},
+        {x: 0, opacity: 1, ease: 'back.out(1.7)', delay:1.5});
+
+     
+</script>
+</body>
+</html>

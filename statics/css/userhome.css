@@ -1,0 +1,83 @@
+body {
+  background: #f3f3f3;
+}
+
+nav {
+  background: #bf9eda;
+}
+
+nav a {
+  color: ivory;
+}
+
+.cards {
+  position: relative;
+  background-color: #f3f3f3;
+  padding: 5%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(18rem, 0.8fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 0.8fr));
+  row-gap: 4%;
+}
+
+.cards .card {
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+}
+
+.cards .card:hover {
+  -webkit-transform: translateY(-4px);
+          transform: translateY(-4px);
+}
+
+.cards .card a {
+  background: #aa69aa;
+  border: none;
+}
+
+.cards .card a:hover {
+  background: #965396;
+}
+
+.bestseller .bestcards {
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(19rem, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  row-gap: 1%;
+}
+
+.bestseller .bestcards .card {
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
+}
+
+.bestseller .bestcards .card:hover {
+  -webkit-transform: translateY(-3px);
+          transform: translateY(-3px);
+}
+
+.bestseller .bestcards .card a {
+  background: #aa69aa;
+  border: none;
+}
+
+.bestseller .bestcards .card a:hover {
+  background: #965396;
+}
+
+.update form button {
+  background: #aa69aa;
+  border: none;
+}
+
+.update form button:hover {
+  background: #965396;
+}
+/*# sourceMappingURL=userhome.css.map */
