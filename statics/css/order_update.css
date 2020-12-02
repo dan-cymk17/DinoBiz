@@ -1,0 +1,20 @@
+form {
+  background: transparent;
+}
+
+input {
+  margin-left: 2%;
+  color: white;
+  border-radius: 20%;
+}
+
+.card {
+  background: #45314e;
+}
+
+select, label {
+  padding: 1%;
+  background: transparent;
+  color: white;
+}
+/*# sourceMappingURL=order_update.css.map */

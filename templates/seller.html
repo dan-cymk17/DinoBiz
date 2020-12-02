@@ -1,0 +1,58 @@
+{% include 'common/seller_template.html' %}
+<section class="summary">
+  <div class="cards">
+    <div id="i1">
+      <h4>{{seller.fname}}&nbsp{{seller.lname}}</h4>
+      <button type="button" class="btn btn-secondary btn-lg" style="width: 90%; height: 20%; font-size: 90%; margin: 2%; padding: 2px;"><a href="#">Update Information</a></button><br>
+    </div>
+    <div id="i2">
+      <h4>Total Number of Orders</h4>
+      <p>{{orders_count}}</p>
+    </div>
+    <div id="i3">
+      <h4>Total Number of Products</h4>
+      <p></p>
+    </div>
+  </div>
+</section>
+      <section class="customers">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Action</th>
+          </tr>
+
+          {% for c in c_name %}
+            <tr>
+              <td>{{c.fname}}</td>
+              <td>{{c.u_phone}}</td>
+              <td><button type="button" class="btn btn-secondary btn" style="width: 70%; height: 20%; font-size: 90%; margin: 2%; padding: 7px;"><a href="{% url 'customer' c.id %}">Details</a></button></td>
+            </tr>
+          {% endfor %}
+        </table>
+      </section>
+      <section class="orders">
+        <table>
+          <tr>
+            <th>Item</th>
+            <th>Customer Name</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th>Update</th>
+          </tr>
+            {% for order in orders %}
+            {% if order.status == 'Pending' %}
+            <tr>
+              <td>{{order.product.name}}</td>
+              <td>{{order.customer.fname}}</td>
+              <td>{{order.date_created}}</td>
+              <td>{{order.status}}</td>
+              <td><button type="button" class="btn btn-secondary btn" style="width: 70%; padding: 7px; height: 20%; font-size: 90%; margin: 2%;"><a href="{% url 'orderUpdate' order.id %}">Update</a></button></td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </table>
+      </section>
+      {% include 'common/seller_footer.html' %}
