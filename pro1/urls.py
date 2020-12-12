@@ -25,5 +25,10 @@ urlpatterns = [
     path('seller/<str:s_pk>/',views.test1,name="seller"),
     path('order_update/<str:pk>/',views.orderUpdate,name="orderUpdate"),
     path('uhome/<str:pk>/', views.userHome, name="uHome"),
-    path('uprofile/<str:pk>/', views.userProfile, name="uProfile")
+    path('uprofile/<str:pk>/', views.userProfile, name="uProfile"),
+    path('sellerpage/<str:pk>/', views.order, name="order"),
+    path('usercart/', views.cart, name="cart"),
+    path('updatecart/', views.updateItem, name="updatecart"),
+    path('orders/', views.vieworders, name="orders"),
+    
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

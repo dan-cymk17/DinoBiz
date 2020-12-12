@@ -71,3 +71,42 @@ nav{
         }
         
 }
+
+.discover{
+        background-color: $bg;
+        h1{
+                background-color: $bg;
+        }
+}
+
+.banner{
+        .card{
+                img{
+                        object-fit: cover;
+                        object-position: 20% 10%;
+                }
+
+        .card-body{
+                position: sticky;
+        }
+        }
+}
+
+.products{
+        div{
+                button{
+                        background:$purple;
+                        border: none;
+                }
+                button:hover{
+                        background:$purple-dk ;
+                }
+        }
+}
+
+.cart{
+        .clearfix{
+                background-color: $purple-lt;
+                color: white;  
+        }
+}

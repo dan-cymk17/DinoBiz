@@ -1,0 +1,102 @@
+{% include 'common/user_header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<nav class="navbar navbar-expand-lg navbar-dark shadow">
+  <a class="navbar-brand ml-3" href="#">DinoBiz</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse ml-2" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{% url 'uProfile' user.id %}">Profile</a>
+            <a class="dropdown-item" href="#">Logout</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'uHome' user.id %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link"  href="{% url 'orders' %}">Orders</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Top Offers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Customer Care</a>
+      </li>
+      
+    </ul>
+    
+  </div>
+  <a href="{% url 'cart' %}" class="float-right mr-3">
+    <img src="{% static 'img/cart.png' %}" alt="HTML tutorial" style="width:30px;height:30px;">
+    <span class="badge badge-pill badge-dark">{{ cartitems }}</span>
+  </a>
+  </nav>
+
+<div class="row col-12">
+  <div class="cart col-7 mt-lg-5 ml-5">
+    <div class="clearfix p-4">
+        <div class="cart-row" style="display:flex;">
+            <div style="flex:2"></div>
+            <div style="flex:2">Item</strong></div>
+            <div style="flex:1">Price</strong></div>
+            <div style="flex:1">Quantity</strong></div>
+            <div style="flex:1">Total</strong></div>
+        </div>
+    </div>
+  
+    {% for item in items %}
+    <div class="cart-row bg-light p-1 mt-1.5 shadow" style="display:flex;">
+      <div style="flex:2"> <img class="row-image" src="{{ item.product.image.url }}" alt="" height="100px" width="100px"></div>
+      <div style="flex:2"><strong>{{ item.product.name }}</strong></div>
+      <div style="flex:1"><strong>₹{{ item.product.price }}</strong></div>
+      <div style="flex:1">
+        <button data-product="{{ item.product.id }}" data-action="remove" class="btn btn-light update-cart">-</button>
+        <strong>{{ item.quantity }} </strong>
+        <button data-product="{{ item.product.id }}" data-action="add" class="btn btn-light update-cart">+</button>
+      </div>
+      <div style="flex:1"><strong>₹{{ item.get_total }} </strong></div>
+    </div>
+  {% endfor %}
+  <div class="clearfix">
+    <div class="cart-row" style="display:flex;background-color: rgb(173, 173, 173);">
+        <div style="flex:2"></div>
+        <div style="flex:2">Total</strong></div>
+        <div style="flex:1"></strong></div>
+        <div style="flex:1.25">Total Quantity</strong></div>
+        <div style="flex:1.3">Total Amount</strong></div>
+    </div>
+</div>
+<div class="cart-row bg-light p-1 mt-2 shadow" style="display:flex;">
+  <div style="flex:2"> </div>
+  <div style="flex:2"></div>
+  <div style="flex:1"></div>
+  <div style="flex:1"><strong class="h4">{{ cart.get_cart_items }}</strong></div>
+  <div style="flex:1"><strong class="h4">₹{{ cart.get_cart_total }} </strong></div>
+</div>
+</div>
+
+<div class="shipping col-4 mt-5">
+  <form enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom float-left">Delivery Address</legend>
+    </fieldset>
+    {{ d_form|crispy }}
+    <div class="form-group">
+      <button type="submit" class="btn btn-dark btn btn-block">Place Order</button>
+    </div>
+  </form>
+</div>
+</div>
+
+ 
+  {% include 'common/user_footer.html' %}

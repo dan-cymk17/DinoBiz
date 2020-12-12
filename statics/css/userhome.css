@@ -80,4 +80,38 @@ nav a {
 .update form button:hover {
   background: #965396;
 }
+
+.discover {
+  background-color: #f3f3f3;
+}
+
+.discover h1 {
+  background-color: #f3f3f3;
+}
+
+.banner .card img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: 20% 10%;
+     object-position: 20% 10%;
+}
+
+.banner .card .card-body {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+.products div button {
+  background: #aa69aa;
+  border: none;
+}
+
+.products div button:hover {
+  background: #965396;
+}
+
+.cart .clearfix {
+  background-color: #bf9eda;
+  color: white;
+}
 /*# sourceMappingURL=userhome.css.map */

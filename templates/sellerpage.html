@@ -40,48 +40,37 @@
     <span class="badge badge-pill badge-dark">{{ cartitems }}</span>
   </a>
   </nav>
-<div class="jumbotron jumbotron-fluid">
-    <div class="container float-left">
-      <div class="media">
-        <img class="rounded-circle account-img p-3 shadow" src="{{ user.profile.url }}" alt="" width="200" height="200">
-        <div class="media-body">
-          <h1 class="display-4">Hello {{ user.fname }}!</h1>
-          <p class="lead">You have supported <b>{{ orders_count }}</b> small scale startups so far, keep it going!</p>
-        </div>
+  <section class="banner mr-5 ml-5 shadow">
+    <div class="card mb-3">
+      <img class="card-img-top shadow" src="{{ seller.image.url }}" alt="Card image cap" height="300px" >
+      <div class="card-body">
+        <h5 class="card-title display-4">{{ seller.company }}</h5>
+        <p class="card-text lead">{{ seller.description }}</p>
+        <p class="card-text"><small class="text-muted">{{ orders_count }} Customers have ordered from here in the past month</small></p>
       </div>
     </div>
-  </div>
-  <br>  <br>  <br>  <br>  <br> <br> <br>
-  {% if messages %}
-  <div class="row">
-    <div class="col-sm-4">
-          {% for message in messages %}
-          <div class="alert alert-success" role="alert">
-            <p{% if message.tags %} class="{{ message.tags }} text-center.update{"{% endif %}>{{ message }}</p>
+  </section>
+
+  <section class="products mr-5 ml-5 col-5">
+    <h4 class="display-4">Items</h4>
+    {% for p in products %}
+      <div class="row shadow p-3">
+        <div class="card col-12">
+          <div class="card-body ">
+            <img class="card-img-left" src="{{ p.image.url }}" alt="" height="200px" width="200px">
+            <div class="content col-6 float-right">
+              <h5 class="card-title">{{ p.name }}</h5>
+              <p class="card-text">{{ p.description }}</p>
+              <p class="lead" style="display:inline;">₹ {{ p.price}}</p>
+              <button data-product="{{ p.id }}" data-action="add" class="btn btn-dark float-right update-cart">Add to Cart</button>
+            </div>
+            
           </div>
-          {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-<div class="update">
-    <div class="row-ml-5">
-        <div class="col-md-4">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                  <legend class="border-bottom float-left">Profile Information</legend>
-                </fieldset>
-                {{ u_form|crispy }}
-                <div class="form-group">
-                  <button type="submit" class="btn btn-dark btn-sm btn-block">Update</button>
-                </div>
-            </form>
         </div>
-    </div>
-</div>
+      </div>
+  
+{% endfor %}
+  </section>
 
-
-
-
-
-{% include 'common/user_footer.html' %}
+ 
+  {% include 'common/user_footer.html' %}
