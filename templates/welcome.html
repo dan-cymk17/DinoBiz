@@ -7,9 +7,80 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>DinoBiz</title>
-
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+    <script>src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.5.3/umd/popper.min.js"</script>
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <style>
+        html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #b48cb6 !important;
+}
+
+
+.user_card {
+    width: 350px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: #c591e4;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+
+}
+
+.form_container {
+    margin-top: 10px;
+}
+
+.login_btn {
+    width: 300px;
+    height: 50px;
+    background: #342541 !important;
+    color: white !important;
+    font-size: 2em;
+}
+.login_btn:hover {
+    width: 100%;
+    background: #52277c !important;
+    color: white !important;
+    font-size: 2em;
+}
+.login_container {
+    padding: 0 2rem;
+}
+.input-group-text {
+    background: #342541 !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+header{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 3rem 0;
+    z-index: 999;
+}
+    </style>
 </head>
 <body>
 <header>
@@ -27,7 +98,10 @@
                     <a href="#" class="nav-link">Reviews</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Get Started</a>
+                    <a href="#register" class="nav-link">Get Started</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#login" class="nav-link">Login</a>
                 </li>
             </ul>
         </nav>
@@ -80,6 +154,86 @@
     
 </section>
 
+<section class="register col-12" id="register">
+    <div class="container">
+		<div class="d-flex">
+			<div class="user_card mt-4 col-5">
+				<div class="d-flex justify-content-center form_container">
+
+					<form method="POST">
+                        {% csrf_token %}
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+							</div>
+							{{ form.username }}
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+							</div>
+							{{ form.email }}
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+							{{ form.password1 }}
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+							{{ form.password2 }}
+						</div>
+
+				   		<div class="d-flex justify-content-center mt-3 login_container">
+				 			<input class="btn login_btn" type="submit" value="Create Account">
+				   		</div>
+					</form>
+				</div>
+				{% for m in messages %}
+					<p class="alert alert-dark mt-2">{{ m }}  </p>
+				{% endfor %}
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Already have an account? <a href="#" class="ml-2">Login</a>
+					</div>
+				</div>
+            </div>
+            <div class="inst mt-5 ml-5 pl-5 col-6"> 
+                <h1>Step 1</h1>
+                <h2 class="ml-5 mt-3">Creating an account </h2>
+            </div>
+		</div>
+	</div>
+
+</section>
+
+<section id="login" class="login mx-auto" >
+
+    <h1 class="display-4 text-center p-5">Login</h1>
+    <div class="col-7 mx-auto" style="display:flex;">
+        <div class="card shadow m-5" style="width: 37rem;">
+            <img class="card-img-top" src="{% static 'img/buyer.jpg' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title display-4">Buyer</h5>
+              <p class="card-text">Discover local business and service providers around you and do your bit to support them.</p>
+              <a href="{% url 'userlogin' %}" class="btn btn-dark btn-lg btn-block">Buyer Login</a>
+            </div>
+          </div>
+          <div class="card shadow m-5" style="width: 37rem;">
+            <img class="card-img-top" src="{% static 'img/sellerlog.jpg' %}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title display-4">Seller</h5>
+              <p class="card-text">Your Oppurtunity to display your work/products and provide your service.</p>
+              <a href="{% url 'sellerlogin' %}" class="btn btn-dark btn-lg btn-block">Seller Login</a>
+            </div>
+          </div>
+    </div>
+    
+</section>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.5/gsap.min.js"></script>
 
@@ -105,6 +259,16 @@
         {x: '30rem', opacity: 0},
         {x: 0, opacity: 1, ease: 'back.out(1.7)', delay:1.5});
 
+        var form_fields = document.getElementsByTagName('input')
+		form_fields[1].placeholder='Username..';
+		form_fields[2].placeholder='Email..';
+		form_fields[3].placeholder='Enter password...';
+		form_fields[4].placeholder='Re-enter Password...';
+
+
+		for (var field in form_fields){	
+			form_fields[field].className += ' form-control'
+		}
      
 </script>
 </body>

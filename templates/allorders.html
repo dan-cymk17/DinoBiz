@@ -1,0 +1,57 @@
+{% include 'common/seller_header.html' %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark ">
+  <a class="navbar-brand" href="#">DinoBiz</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{% url 'sProfile' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+          </div>
+        </div>
+      </li>
+      
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'seller' %}">Dashboard</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'allorders' %}">All Orders</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'viewProducts' %}">Products</a>
+      </li>
+    </ul>
+  </div>
+  
+</nav>
+<div class="row col-10 mx-auto" style="display:flex;">
+    <h1 style="flex: 2;" class="display-4  ">Your Orders</h1>
+</div>
+<div class="row">
+  {% for p in orders %}
+  <div class="row shadow col-10 p-3 mx-auto">
+    <div class="card col-12">
+      <div class="card-body ">
+        <div class="content col-6">
+          <h5 class="card-title">Order Number : {{ p.id }}</h5>
+          <p class="card-text">Customer Name : {{ p.customer.fname }}</p>
+          <p class="lead" style="display:inline;">Order Total :₹ {{ p.get_cart_total}}</p><br>
+          <p class="lead" style="display:inline;">Total Quantity : {{ p.get_cart_items}}</p><br>
+          <p class="lead" style="display:inline;">Date Ordered : {{ p.date_created}}</p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+
+</div>

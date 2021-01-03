@@ -1,0 +1,72 @@
+{% include 'common/seller_header.html' %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark ">
+  <a class="navbar-brand" href="#">DinoBiz</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{% url 'sProfile' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+          </div>
+        </div>
+      </li>
+      
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'seller' %}">Dashboard</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="#">Orders</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'viewProducts' %}">Products</a>
+      </li>
+    </ul>
+  </div>
+  
+</nav>
+<div class="row col-11 mx-auto" style="display:flex;">
+    <h1 style="flex: 2;" class="display-4  ">Order Number {{ order.id }}</h1>
+</div>
+<h1 class="lead col-4 ml-5 pl-5">Order placed on {{ order.date_created }}</h1>
+<div class="row col-12" style="display:flex;">
+  <div style="flex:3;">
+    {% for i in items %}
+  <div class="shadow col-10 p-3 mx-auto" >
+    <div class="card col-12">
+      <div class="card-body ">
+        <div class="content col-6">
+          <h5 class="card-title">{{ i.product.name }}</h5>
+          <p class="card-text">{{ i.quantity }}</p>
+          <p class="lead" style="display:inline;">₹ {{ i.get_total }}</p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+{% endfor %}
+  </div>
+  
+
+<div class="col-6" style="flex:2;">
+  <div class="row shadow col-12  mx-auto">
+    <h5 class="card-title">Delivery Address</h5><br>
+    <ul class="list-group col-12">
+      <li class="list-group-item">Customer Name : {{ order.customer.fname }} {{ order.customer.lname }}</li>
+      <li class="list-group-item">Door Number : {{ address.dno }}</li>
+      <li class="list-group-item">Street : {{ address.street }}</li>
+      <li class="list-group-item">Locality : {{ address.locality }}</li>
+      <li class="list-group-item">Pincode : {{ address.pincode }}</li>
+    </ul>
+    <a href="{% url 'updatestatus' order.id %}"><button class="btn btn-success btn-block mt-3 mb-4">Update Order Status as Delivered</button></a>
+  </div>
+</div>
+
+</div>

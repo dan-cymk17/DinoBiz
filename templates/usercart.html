@@ -14,13 +14,13 @@
             Account
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="{% url 'uProfile' user.id %}">Profile</a>
-            <a class="dropdown-item" href="#">Logout</a>
+            <a class="dropdown-item" href="{% url 'uProfile' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
           </div>
         </div>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'uHome' user.id %}">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'uHome'%}">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item ">
         <a class="nav-link"  href="{% url 'orders' %}">Orders</a>

@@ -1,12 +1,13 @@
-{% include 'common/user_header.html' %}
+{% include 'common/seller_header.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-<nav class="navbar navbar-expand-lg navbar-dark shadow">
-  <a class="navbar-brand ml-3" href="#">DinoBiz</a>
+<title>{{ seller.fname }} Dashboard</title>
+<nav class="navbar navbar-expand-lg navbar-dark ">
+  <a class="navbar-brand" href="#">DinoBiz</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse ml-2" id="navbarNav">
+  <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item">
         <div class="dropdown">
@@ -14,50 +15,42 @@
             Account
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="{% url 'uProfile' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'sProfile' %}">Profile</a>
             <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
           </div>
         </div>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'uHome' %}">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'seller' %}">Dashboard</a>
       </li>
       <li class="nav-item ">
-        <a class="nav-link"  href="{% url 'orders' %}">Orders</a>
+        <a class="nav-link" href="{% url 'allorders' %}">All Orders</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Top Offers</a>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'viewProducts' %}">Products</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Customer Care</a>
-      </li>
-      
     </ul>
-    
   </div>
-  <a href="{% url 'cart' %}" class="float-right mr-3">
-    <img src="{% static 'img/cart.png' %}" alt="HTML tutorial" style="width:30px;height:30px;">
-    <span class="badge badge-pill badge-dark">{{ cartitems }}</span>
-  </a>
-  </nav>
+  
+</nav>
 <div class="jumbotron jumbotron-fluid">
     <div class="container float-left">
       <div class="media">
-        <img class="rounded-circle account-img p-3 shadow" src="{{ user.profile.url }}" alt="" width="200" height="200">
+        <img class="rounded-circle account-img p-3" src="{{ seller.image.url }}" alt="" width="200" height="200">
         <div class="media-body">
-          <h1 class="display-4">Hello {{ user.fname }}!</h1>
-          <p class="lead">You have supported <b>{{ orders_count }}</b> small scale startups so far, keep it going!</p>
+          <h1 class="display-4">Hello {{ seller.fname }}!</h1>
+          <!-- <p class="lead">You have supported <b>{{ orders_count }}</b> small scale startups so far, keep it going!</p> -->
         </div>
       </div>
     </div>
   </div>
-  <br>  <br>  <br>  <br>  <br> <br> <br>
+  <br>  <br>  <br>  <br>  <br>
   {% if messages %}
   <div class="row">
     <div class="col-sm-4">
           {% for message in messages %}
           <div class="alert alert-success" role="alert">
-            <p{% if message.tags %} class="{{ message.tags }} text-center.update{"{% endif %}>{{ message }}</p>
+            <p{% if message.tags %} class="{{ message.tags }} text-center"{% endif %}>{{ message }}</p>
           </div>
           {% endfor %}
     </div>
@@ -71,7 +64,7 @@
                 <fieldset class="form-group">
                   <legend class="border-bottom float-left">Profile Information</legend>
                 </fieldset>
-                {{ u_form|crispy }}
+                {{ s_form|crispy }}
                 <div class="form-group">
                   <button type="submit" class="btn btn-dark btn-sm btn-block">Update</button>
                 </div>
@@ -84,4 +77,4 @@
 
 
 
-{% include 'common/user_footer.html' %}
+{% include 'common/seller_footer.html' %}

@@ -1,0 +1,53 @@
+{% include 'common/seller_header.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+<link rel="stylesheet" href="{% static 'css/products.css' %}">
+<!-- <title>{{ seller.fname }} Dashboard</title> -->
+<nav class="navbar navbar-expand-lg navbar-dark ">
+  <a class="navbar-brand" href="#">DinoBiz</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Account
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{% url 'sProfile' %}">Profile</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'seller' %}">Dashboard</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'allorders' %}">All Orders</a>
+      </li>
+      <li class="nav-item ">
+        <a class="nav-link" href="{% url 'viewProducts' %}">Products</a>
+      </li>
+    </ul>
+  </div>
+  </nav>
+  <div style="display:flex;">
+    <div class="container col-8 float-left ml-5">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom">Product Update</legend>
+        </fieldset>
+        {{ p_update|crispy }}
+        <button type="submit" class="btn btn-dark btn-block mt-5">Update Product</button>
+      </form>
+  </div>
+  <div class="col-4">
+    <img src="{{ product.image.url }}"  class="img-thumbnail">
+  </div>
+  </div>
+  
+  

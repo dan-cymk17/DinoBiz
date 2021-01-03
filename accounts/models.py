@@ -34,6 +34,7 @@ class Customer(models.Model):
         return self.fname
 
 class Seller(models.Model):
+    user = models.OneToOneField(User, null=True,blank=True,on_delete=models.CASCADE)
     fname = models.CharField(max_length=200,null=True)
     lname = models.CharField(max_length=200,null=True)
     company = models.CharField(max_length=100,null=True)

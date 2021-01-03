@@ -1,17 +1,84 @@
 from django.shortcuts import render,redirect
 from .models import *
 from django.contrib import messages
-from .forms import OrderForm,UserUpdate,Shipping
+from .forms import *
 from django.http import JsonResponse
 import json
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
-    return render(request,'welcome.html')
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid:
+            form.save()
+            f_name=request.POST.get('username')
+            user = User.objects.filter(username=f_name).first()
+            print(user.username)
+            new_customer = Customer(user=user,fname=f_name)
+            print("done")
+            new_customer.save()
+            messages.success(request,"Your account has been Created, You can now login into your desired Account type!")
+    context = {'form':form}
+    return render(request,'welcome.html',context)
+
+def userlogin(request):
+    if request.method == 'POST':
+        usr=request.POST.get('username')
+        psd=request.POST.get('password')
+
+        user = authenticate(request, username=usr, password=psd)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/uhome/')
+        else:
+            messages.info(request,"Username or Password Incorrect")
+    return render(request,'userlogin.html')
+
+def sellerlogin(request):
+    if request.method == 'POST':
+        usr=request.POST.get('username')
+        psd=request.POST.get('password')
+
+        user = authenticate(request, username=usr, password=psd)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/seller/')
+        else:
+            messages.info(request,"Username or Password Incorrect")
+    return render(request,'sellerlogin.html')
 
 
-def test1(request,s_pk):
-    seller= Seller.objects.get(id=s_pk)
+
+def Logoutuser(request):
+    logout(request)
+    return redirect('/home/')
+
+def register(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid:
+            form.save()
+            f_name=request.POST.get('username')
+            user = User.objects.filter(username=f_name).first()
+            print(user.username)
+            new_customer = Customer(user=user,f_name=f_name)
+            print("done")
+            new_customer.save()
+            messages.success(request,"Your account has been Created, You can now login into your desired Account type!")
+    context = {'form':form}
+    return render(request,'register.html',context)
+
+def test1(request):
+    # seller= Seller.objects.get(id=s_pk)
+    if request.user.is_authenticated:
+        seller = request.user.seller
+
     customer= Customer.objects.all()
     orders=seller.order_set.all()
     customer_names=orders.values('customer').distinct()
@@ -19,8 +86,10 @@ def test1(request,s_pk):
     for c in customer_names:
         c_name.append(customer.get(id=c['customer']))
     orders_count=orders.count()
-    context ={'seller':seller,'orders':orders,'orders_count':orders_count,'c_name':c_name,'customer':customer}
+    pending_orders_count = orders.filter(status="Pending").count()
+    context ={'seller':seller,'orders':orders,'orders_count':orders_count,'c_name':c_name,'customer':customer, 'pending_orders_count':pending_orders_count}
     return render(request,'seller.html',context)
+
 
 def test2(request,c_pk):
     customer= Customer.objects.get(id=c_pk)
@@ -40,7 +109,9 @@ def orderUpdate(request,pk):
     context = {'form':form}
     return render(request,'order_update.html',context)
 
-def userHome(request,pk):
+
+@login_required(login_url='userlogin')
+def userHome(request):
     if request.user.is_authenticated:
         customer=request.user.customer
         cart,created = Cart.objects.get_or_create(customer=customer)
@@ -52,7 +123,6 @@ def userHome(request,pk):
         order = {'get_cart_total':0,'get_cart_items':0}
 
     #******************************************************************************
-    customer=Customer.objects.get(id=pk)
     food=Product.objects.filter(category="Food")
     art=Product.objects.filter(category="Art")
     bites=Product.objects.filter(category="Quick Bites")
@@ -61,7 +131,9 @@ def userHome(request,pk):
     context={'user':customer,'seller':seller,'order':order,'food':food,'art':art,'bites':bites,'cartitems':cartitems}
     return render(request,'userhome.html', context)
 
-def userProfile(request,pk):
+
+@login_required(login_url='userlogin')
+def userProfile(request):
     if request.user.is_authenticated:
         customer=request.user.customer
         cart,created = Cart.objects.get_or_create(customer=customer)
@@ -73,21 +145,20 @@ def userProfile(request,pk):
         order = {'get_cart_total':0,'get_cart_items':0}
 
     #******************************************************************************
-
-
-    user=Customer.objects.get(id=pk)
-    u_update=UserUpdate(instance=user)
-    order=user.order_set.all()
+    u_update=UserUpdate(instance=customer)
+    order=customer.order_set.all()
     orders_count=order.count()
-    context={'user':user,'orders_count':orders_count,'u_form':u_update,'cartitems':cartitems}
+    context={'user':customer,'orders_count':orders_count,'u_form':u_update,'cartitems':cartitems}
     if request.method =='POST':
-        u_update=UserUpdate(request.POST,request.FILES,instance=user)
+        u_update=UserUpdate(request.POST,request.FILES,instance=customer)
         if u_update.is_valid():
             u_update.save()
             messages.success(request,"Your profile has been updated Succesfully")
-            return redirect('/uprofile/'+str(user.id))
+            return redirect('/uprofile/')
     return render(request,'userprofile.html',context)
 
+
+@login_required(login_url='userlogin')
 def order(request,pk):
     if request.user.is_authenticated:
         customer=request.user.customer
@@ -109,7 +180,7 @@ def order(request,pk):
     context={'seller':seller,'orders':orders,'orders_count':orders_count,'products':products,'cartitems':cartitems}
     return render(request,'sellerpage.html',context)
 
-
+@login_required(login_url='userlogin')
 def cart(request):
     if request.user.is_authenticated:
         customer=request.user.customer
@@ -142,6 +213,7 @@ def cart(request):
     context={'items':items,'cart':cart,'cartitems':cartitems,'d_form':d_form}
     return render(request,'usercart.html',context)
 
+@login_required(login_url='userlogin')
 def vieworders(request):
     if request.user.is_authenticated:
         customer=request.user.customer
@@ -186,3 +258,104 @@ def updateItem(request):
 
     print(productId,action)
     return JsonResponse('Item was added', safe=False)
+
+def sellerProfile(request):
+    if request.user.is_authenticated:
+        seller = request.user.seller
+    # seller=Seller.objects.get(id=pk)
+    s_update=SellerUpdate(instance=seller)
+    # order=user.order_set.all()
+    # orders_count=order.count()
+    # context={'user':user,'orders_count':orders_count,'u_form':u_update}
+    context={'seller':seller, 's_form':s_update}
+    if request.method =='POST':
+        s_update=SellerUpdate(request.POST,request.FILES,instance=seller)
+        if s_update.is_valid():
+            s_update.save()
+            messages.success(request,"Your profile has been updated Succesfully")
+            return redirect('/sprofile/')
+    return render(request,'sellerprofile.html',context)
+
+def viewProducts(request):
+    if request.user.is_authenticated:
+        seller = request.user.seller
+    
+    products = Product.objects.filter(seller=seller)
+    context={'products':products}
+    
+    return render(request, 'viewProducts.html',context)
+
+def productsAdd(request):
+    if request.user.is_authenticated:
+        seller = request.user.seller
+    p_form = ProductForm()
+    if request.method =='POST':
+        p_form = ProductForm(request.POST)
+        if p_form.is_valid():
+            name = p_form.cleaned_data['name']
+            price = p_form.cleaned_data['price']
+            category = p_form.cleaned_data['category']
+            descr = p_form.cleaned_data['description']
+            p = Product(name=name, price=price, category=category, description=descr,seller=seller)
+            p.save()
+            messages.success(request,"Your profile has been updated Succesfully")
+            return redirect('/viewprod/')
+    context = {'user':seller, 'p_form':p_form}
+    return render(request, 'products.html', context)
+
+def productsUpdate(request,pk):
+    if request.user.is_authenticated:
+        seller=request.user.seller
+
+    # else:
+    #     items=[]
+    #     order = {'get_cart_total':0,'get_cart_items':0}
+
+    #******************************************************************************
+    product = Product.objects.get(id=pk)
+    p_update=ProductUpdateForm(instance=product)
+    context = {'user':seller, 'p_update':p_update,'product':product}
+    if request.method =='POST':
+        p_update=ProductUpdateForm(request.POST,request.FILES,instance=product)
+        if p_update.is_valid():
+            p_update.save()
+            messages.success(request,"Product has been updated")
+            return redirect('/viewprod/')
+    return render(request,'productsUpdate.html',context)
+
+def deleteproduct(request,pk):
+    if request.user.is_authenticated:
+        seller=request.user.seller
+
+    product = Product.objects.get(id=pk)
+    product.delete()
+    return redirect('/viewprod/')
+
+
+
+def orderdetails(request,pk):
+    if request.user.is_authenticated:
+        seller=request.user.seller
+
+    order = Order.objects.get(id=pk)
+    items = order.orderitem_set.all()
+    address=Delivery.objects.filter(order=order).first()
+    print(address.dno)
+    context ={'order':order,'items':items,'address':address}
+    return render(request,'orderdetails.html',context)
+
+def updatestatus(request,pk):
+    if request.user.is_authenticated:
+        seller=request.user.seller
+    order = Order.objects.get(id=pk)
+    order.status="Delivered"
+    order.save()
+    return redirect('/seller/') 
+
+def allorders(request):
+    if request.user.is_authenticated:
+        seller=request.user.seller
+
+    orders=seller.order_set.all()
+    context={'orders':orders}
+    return render(request,'allorders.html',context)
