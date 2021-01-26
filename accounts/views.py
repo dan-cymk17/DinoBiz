@@ -56,7 +56,7 @@ def sellerlogin(request):
 
 def Logoutuser(request):
     logout(request)
-    return redirect('/home/')
+    return redirect('/home/#login')
 
 def register(request):
     form = CreateUserForm()
